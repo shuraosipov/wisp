@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>WISP</title>
+    <link rel="stylesheet" type="text/css" href="../static/style.css">
+</head>
+
+<body>
+
+<div class="top">
+
+</div>
+
+{% if '500' in health or '503' in health %}
+<div class="topnav_outage">
+    <div class="status"> {{ month }} {{ day }}, {{ year }}
+        <strong>Possible service interruption</strong></div>
+</div>
+{% else %}
+<div class="topnav">
+    <div class="status"> {{ month }} {{ day }}, {{ year }}
+        <strong>All services operational</strong></div>
+</div>
+{% endif %}
+
+<div class="demo">
+    <h1>Web Application Status Monitoring Page</h1>
+    <p>This page provides status information on the services that are part of Spotfire Platform. Check back here to view
+        the current status of the services listed below.</p>
+
+
+    <table>
+        <tbody>
+        <tr>
+            <th>Service</th>
+            <th>Status code</th>
+            <th>Response time</th>
+            <th>State</th>
+
+        </tr>
+        <tr class="blank_row">
+            <td colspan="3"></td>
+        </tr>
+
+       {% for service in results %}
+        <tr>
+            <td class="tr_service">
+                <div class="tooltip">{{ service }}
+                    <span class="tooltiptext">{{ results[service]['url'] }}</span>
+                </div>
+            </td>
+            <td class="tr_service" align="center">{{ results[service]['status'] }}</td>
+            <td class="tr_service" align="center">{{ results[service]['elapsed'] }}</td>
+            {% if results[service]['status'] == 200 %}
+            <td><span class="bubble"></span></td>
+            {% else %}
+            <td><span class="bubble_outage"></span></td>
+            {% endif %}
+
+        </tr>
+
+        {% for node_dict in results[service]['nodes'] %}
+        {% for node in node_dict %}
+        <tr>
+            <td>{{ node }}</a></td>
+            <td align="center">{{ node_dict[node]['status'] }}</td>
+            <td align="center">{{ node_dict[node]['elapsed'] }}</td>
+            {% if node_dict[node]['status'] == 200 %}
+            <td><span class="bubble"></span></td>
+            {% else %}
+            <td><span class="bubble_outage"></span></td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+        {% endfor %}
+
+        <tr class="blank_row">
+            <td colspan="3"></td>
+        </tr>
+        <tr class="blank_row">
+            <td colspan="3"></td>
+        </tr>
+
+
+        <tr class="blank_row">
+            <td colspan="3"></td>
+        </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+    <p></p>
+
+    <div class="clear">
+        <table>
+            <tbody>
+            <tr>
+                <td><span class="bubble"></span> Normal Operation</td>
+                <td align="left"><span class="bubble_outage"></span> Service Outage</td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p></p>
+
+</div>
+
+
+<div class="footer">
+    Generated on {{ date }}.
+</div>
+</body>
+
+</html>

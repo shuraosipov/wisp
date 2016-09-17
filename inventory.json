@@ -1,0 +1,23 @@
+{
+  "Spotfire Server": {
+    "url": "http://amazon.com",
+    "nodes": [
+      "http://yandex.com",
+      "http://rambler.ru"
+    ]
+  },
+  "Spotfire Web Player": {
+    "url": "http://twitter.com",
+    "nodes": [
+      "http://google.com",
+      "http://twitch.com"
+    ]
+  },
+  "Statistics Services": {
+    "url": "http://google.com",
+    "nodes": [
+      "http://vk.com",
+      "http://ok.ru"
+    ]
+  }
+}
