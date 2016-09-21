@@ -1,15 +1,15 @@
 {
   "Spotfire Server": {
-    "url": "http://amazon.com",
+    "url": "http://192.168.122.5/",
     "nodes": [
-      "http://yandex.com",
+      "http://192.168.122.5/",
       "http://rambler.ru"
     ]
   },
   "Spotfire Web Player": {
     "url": "http://twitter.com",
     "nodes": [
-      "http://google.com",
+      "https://192.168.122.5/",
       "http://twitch.com"
     ]
   },

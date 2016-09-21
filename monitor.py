@@ -19,22 +19,34 @@ def healh_check():
 
     for service in inventory:
         url = inventory[service]['url']
-        gl_req = requests.get(url)
-        gl_status = gl_req.status_code
-        health.append(str(gl_status))
-        gl_elapsed = gl_req.elapsed.total_seconds()
 
-        results[service] = {'url': url, 'status': gl_status, 'elapsed': gl_elapsed}
-        results[service]['nodes'] = []
+        try:
+            gl_req = requests.get(url, verify=False, timeout=5)
+            gl_status = gl_req.status_code
+            health.append(str(gl_status))
+            gl_elapsed = gl_req.elapsed.total_seconds()
+            results[service] = {'url': url, 'status': gl_status, 'elapsed': gl_elapsed}
+            results[service]['nodes'] = []
+
+        except requests.exceptions.ConnectionError:
+            results[service] = {'url': url, 'status': "ConnectionError", 'elapsed': "-"}
+            results[service]['nodes'] = []
+            pass
 
         for node in inventory[service]['nodes']:
-            nd_req = requests.get(node)
-            nd_status = nd_req.status_code
-            nd_elapsed = nd_req.elapsed.total_seconds()
-            h = urlparse.urlparse(node)
-            nd_nodename = h.hostname
+            try:
+                nd_req = requests.get(node, verify=False, timeout=5)
+                nd_status = nd_req.status_code
+                nd_elapsed = nd_req.elapsed.total_seconds()
+                h = urlparse.urlparse(node)
+                nd_nodename = h.hostname
+                results[service]['nodes'].append({nd_nodename: {'status': nd_status, 'elapsed': nd_elapsed}})
 
-            results[service]['nodes'].append({nd_nodename: {'status': nd_status, 'elapsed': nd_elapsed}})
+            except requests.exceptions.ConnectionError:
+                h = urlparse.urlparse(node)
+                nd_nodename = h.hostname
+                results[service]['nodes'].append({nd_nodename: {'status': "ConnectionError", 'elapsed': "-"}})
+                pass
 
     now = datetime.datetime.now()
     date = now.ctime()
