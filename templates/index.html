@@ -12,7 +12,7 @@
 
 </div>
 
-{% if '500' in health or '503' in health %}
+{% if '500' in health or '503' in health or 'ConnectionError' in health %}
 <div class="topnav_outage">
     <div class="status"> {{ month }} {{ day }}, {{ year }}
         <strong>Possible service interruption</strong></div>

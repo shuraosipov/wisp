@@ -13,7 +13,7 @@ with open("inventory.json") as data_file:
 
 
 @app.route('/')
-def healh_check():
+def health_check():
     results = {}
     health = []
 
@@ -29,6 +29,7 @@ def healh_check():
             results[service]['nodes'] = []
 
         except requests.exceptions.ConnectionError:
+            health.append("ConnectionError")
             results[service] = {'url': url, 'status': "ConnectionError", 'elapsed': "-"}
             results[service]['nodes'] = []
             pass
