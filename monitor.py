@@ -2,6 +2,7 @@ import requests
 import urlparse
 import datetime
 import json
+from collections import OrderedDict
 from flask import Flask, render_template
 
 app = Flask(__name__)
@@ -9,12 +10,14 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['DEBUG'] = True
 
 with open("inventory.json") as data_file:
-    inventory = json.load(data_file)
+    raw_inventory = json.load(data_file)
+
+inventory = OrderedDict(sorted(raw_inventory.items(), key=lambda t: t[0]))
 
 
 @app.route('/')
 def health_check():
-    results = {}
+    results = OrderedDict()
     health = []
 
     for service in inventory:

@@ -1,15 +1,15 @@
 {
   "Spotfire Server": {
-    "url": "http://192.168.122.5/",
+    "url": "http://ya.ru",
     "nodes": [
-      "http://192.168.122.5/",
+      "http://mail.ru/",
       "http://rambler.ru"
     ]
   },
   "Spotfire Web Player": {
     "url": "http://twitter.com",
     "nodes": [
-      "https://192.168.122.5/",
+      "http://mail.ru/",
       "http://twitch.com"
     ]
   },
